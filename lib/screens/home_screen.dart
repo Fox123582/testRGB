@@ -28,13 +28,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Color textColor =
+        ThemeData.estimateBrightnessForColor(_color) == Brightness.dark
+        ? Colors.white
+        : Colors.black;
+
     return Scaffold(
       body: GestureDetector(
         onTap: _changeColor,
+        behavior: HitTestBehavior.opaque, // Ensure tap works everywhere
         child: AnimatedContainer(
           duration: const Duration(milliseconds: _animationDurationMs),
           color: _color,
-          child: const Center(child: Text('Hello there')),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Hello there',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
